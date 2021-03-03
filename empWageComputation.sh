@@ -8,55 +8,40 @@ isPresent=1
 #GET RANDOM VALUE
 randomNumber=$((RANDOM%2))
 
-TotalWorkingDays=20; #In a month
+EMPLOYEE_HOUR_FULLTIME=8
+EMPLOYEE_HOUR_PARTTIME=4
+CompanyTotalWorkingDays=20; #In a month
+CompanyTotalEmployeeHours=100;
 WagePerHour=20;
-
-#FUNCTION TO CALCULATE EMPLOYEE WAGE-:
-function calculateWage(){
-      calculateEmployeeWage=$(( $WagePerHour * $1 ))
-      echo $calculateEmployeeWage #return
-}
-
-#CALCULATE EMPLOYEE MONTHLY WAGE-:
-function calculateMonthlyWage(){
-      calculateEmployeeWageForMonth=$(( $1 * $TotalWorkingDays ))
-      echo $calculateEmployeeWageForMonth;
-}
+TotalSalary=0;
+TotalEmployeeHours=0;
+TotalWorkingDays=0;
 
 
-#CHECK THE EMPLOYEE IS PRESENT AND ABSENT-:
-if [ $randomNumber -eq 	$isPresent ]
-then
-	echo "Employee Present"
-        caseChoce=$((RANDOM%2));
+while [[ $TotalEmployeeHours -le $CompanyTotalEmployeeHours &&
+               $TotalWorkingDays -le $CompanyTotalWorkingDays ]]
+do
+      ((TotalWorkingDays++))
+      caseChoce=$((RANDOM%3));
 
-  #case statement-:
-  case "$caseChoce" in
-	0)
-                FullDayHour=8;
-                #ONE DAY, EMPLOYEE WORKING WAGE-:
-                DailyWage="$(calculateWage $FullDayHour)"
-                echo "Full day employee daily wage :" $DailyWage "rupees"
-
-                #MONTHLY, EMPLOYEE WORKING WAGE-:
-                EmployeeWageForMonth="$(calculateMonthlyWage $DailyWage)"
-		echo "To calculate full day employee wages for a Month :" $EmployeeWageForMonth "rupees" 
+      #case statement-:
+      case "$caseChoce" in
+	     0)
+                employeeHour=$((EMPLOYEE_HOUR_FULLTIME))
 		;;
-	1)
-                PartTimeHour=4;
-                #ONE DAY, EMPLOYEE WORKING WAGE-:
-                DailyWage="$(calculateWage $PartTimeHour)"
-                echo "Part time employee daily wage :" $DailyWage "rupees"
-
-                #MONTHLY, EMPLOYEE WORKING WAGE-:
-                EmployeeWageForMonth="$(calculateMonthlyWage $DailyWage)"
-		echo "To calculate part time employee wages for a Month :" $EmployeeWageForMonth "rupees"
+	     1)
+                employeeHour=$((EMPLOYEE_HOUR_PARTTIME))
 		;;
 
-	*)      echo "No choice"
+	     *)
+                employeeHour=0
 		;;
-   esac
+     esac
 
-else
-   echo "Employee Absent"
-fi
+     TotalEmployeeHours=$(($TotalEmployeeHours + $employeeHour))
+done
+
+#SALARY IN A MONTH
+TotalWorkingWage=$(($TotalEmployeeHours * $WagePerHour))
+echo "In this month employee's total working hours is $TotalEmployeeHours & total working wage is $TotalWorkingWage"
+
