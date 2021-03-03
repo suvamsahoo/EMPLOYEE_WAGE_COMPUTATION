@@ -14,3 +14,14 @@ then
 else
 	echo "Employee Absent"
 fi
+
+#CALCULATE THE EMPLOYEE WAGE-:
+function calculateDailyEmployeeWage(){
+	read -p "Wage per hour is :" isWagePerHour "rupees"
+	read -p "Full day hours is :" isFullDayHour
+	calculateEmployeeWage=$(( $isWagePerHour * $isFullDayHour ))
+        echo $calculateEmployeeWage #return
+}
+wage="$( calculateDailyEmployeeWage )"
+
+echo "Calculate daily employee wage :" $wage "rupees"
