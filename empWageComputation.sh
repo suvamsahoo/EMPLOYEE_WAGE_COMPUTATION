@@ -44,8 +44,12 @@ do
 
       dailyHR="$(getWorkHours)"
       dailyWage="$(calculateWage $dailyHR)"
+      dailyWageArray[TotalWorkingDays]=$dailyWage
       TotalWage=$(($TotalWage + $dailyWage))
       TotalEmployeeHours=$(($TotalEmployeeHours + $dailyHR))
 done
 
-echo "In this month employee total working hours is $TotalEmployeeHours & total wage is $TotalWage"
+#PRINT WAGES FOR A MONTH-:
+totalEmployeeWageOfMonth=$(($(calculateWage $TotalEmployeeHours)))
+echo "Daily wages: ${dailyWageArray[@]}"
+echo "In this month employee total working hours is $TotalEmployeeHours & total wage is $totalEmployeeWageOfMonth" #$TotalWage
